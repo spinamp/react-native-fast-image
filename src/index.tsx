@@ -1,4 +1,4 @@
-import React, { forwardRef, memo } from 'react'
+import React, { forwardRef, memo } from "react";
 import {
     View,
     Image,
@@ -10,88 +10,89 @@ import {
     StyleProp,
     TransformsStyle,
     AccessibilityProps,
-} from 'react-native'
+    ViewProps,
+} from "react-native";
 
-import preloaderManager from './PreloaderManager'
+import preloaderManager from "./PreloaderManager";
 
-export type ResizeMode = 'contain' | 'cover' | 'stretch' | 'center'
+export type ResizeMode = "contain" | "cover" | "stretch" | "center";
 
 const resizeMode = {
-    contain: 'contain',
-    cover: 'cover',
-    stretch: 'stretch',
-    center: 'center',
-} as const
+    contain: "contain",
+    cover: "cover",
+    stretch: "stretch",
+    center: "center",
+} as const;
 
-export type Priority = 'low' | 'normal' | 'high'
+export type Priority = "low" | "normal" | "high";
 
 const priority = {
-    low: 'low',
-    normal: 'normal',
-    high: 'high',
-} as const
+    low: "low",
+    normal: "normal",
+    high: "high",
+} as const;
 
-type Cache = 'immutable' | 'web' | 'cacheOnly'
+type Cache = "immutable" | "web" | "cacheOnly";
 
 const cacheControl = {
     // Ignore headers, use uri as cache key, fetch only if not in cache.
-    immutable: 'immutable',
+    immutable: "immutable",
     // Respect http headers, no aggressive caching.
-    web: 'web',
+    web: "web",
     // Only load from cache.
-    cacheOnly: 'cacheOnly',
-} as const
+    cacheOnly: "cacheOnly",
+} as const;
 
 export type Source = {
-    uri?: string
-    headers?: { [key: string]: string }
-    priority?: Priority
-    cache?: Cache
-}
+    uri?: string;
+    headers?: { [key: string]: string };
+    priority?: Priority;
+    cache?: Cache;
+};
 
 export interface OnLoadEvent {
     nativeEvent: {
-        width: number
-        height: number
-    }
+        width: number;
+        height: number;
+    };
 }
 
 export interface OnProgressEvent {
     nativeEvent: {
-        loaded: number
-        total: number
-    }
+        loaded: number;
+        total: number;
+    };
 }
 
 export interface ImageStyle extends FlexStyle, TransformsStyle, ShadowStyleIOS {
-    backfaceVisibility?: 'visible' | 'hidden'
-    borderBottomLeftRadius?: number
-    borderBottomRightRadius?: number
-    backgroundColor?: string
-    borderColor?: string
-    borderWidth?: number
-    borderRadius?: number
-    borderTopLeftRadius?: number
-    borderTopRightRadius?: number
-    overlayColor?: string
-    tintColor?: string
-    opacity?: number
+    backfaceVisibility?: "visible" | "hidden";
+    borderBottomLeftRadius?: number;
+    borderBottomRightRadius?: number;
+    backgroundColor?: string;
+    borderColor?: string;
+    borderWidth?: number;
+    borderRadius?: number;
+    borderTopLeftRadius?: number;
+    borderTopRightRadius?: number;
+    overlayColor?: string;
+    tintColor?: string;
+    opacity?: number;
 }
 
-export interface FastImageProps extends AccessibilityProps {
-    source: Source | number
-    resizeMode?: ResizeMode
-    fallback?: boolean
+export interface FastImageProps extends AccessibilityProps, ViewProps {
+    source: Source | number;
+    resizeMode?: ResizeMode;
+    fallback?: boolean;
 
-    onLoadStart?(): void
+    onLoadStart?(): void;
 
-    onProgress?(event: OnProgressEvent): void
+    onProgress?(event: OnProgressEvent): void;
 
-    onLoad?(event: OnLoadEvent): void
+    onLoad?(event: OnLoadEvent): void;
 
-    onError?(): void
+    onError?(): void;
 
-    onLoadEnd?(): void
+    onLoadEnd?(): void;
 
     /**
      * onLayout function
@@ -100,13 +101,13 @@ export interface FastImageProps extends AccessibilityProps {
      *
      * {nativeEvent: { layout: {x, y, width, height}}}.
      */
-    onLayout?: (event: LayoutChangeEvent) => void
+    onLayout?: (event: LayoutChangeEvent) => void;
 
     /**
      *
      * Style
      */
-    style?: StyleProp<ImageStyle>
+    style?: StyleProp<ImageStyle>;
 
     /**
      * TintColor
@@ -114,25 +115,25 @@ export interface FastImageProps extends AccessibilityProps {
      * If supplied, changes the color of all the non-transparent pixels to the given color.
      */
 
-    tintColor?: number | string
+    tintColor?: number | string;
 
     /**
      * A unique identifier for this element to be used in UI Automation testing scripts.
      */
-    testID?: string
+    testID?: string;
 
     /**
      * Render children within the image.
      */
-    children?: React.ReactNode
+    children?: React.ReactNode;
 }
 
 export interface PreloadProgressHandler {
-    (loaded: number, total: number): void
+    (loaded: number, total: number): void;
 }
 
 export interface PreloadCompletionHandler {
-    (loaded: number, skipped: number): void
+    (loaded: number, skipped: number): void;
 }
 
 function FastImageBase({
@@ -147,14 +148,14 @@ function FastImageBase({
     fallback,
     children,
     // eslint-disable-next-line no-shadow
-    resizeMode = 'cover',
+    resizeMode = "cover",
     forwardedRef,
     ...props
 }: FastImageProps & { forwardedRef: React.Ref<any> }) {
     if (fallback) {
-        const cleanedSource = { ...(source as any) }
-        delete cleanedSource.cache
-        const resolvedSource = Image.resolveAssetSource(cleanedSource)
+        const cleanedSource = { ...(source as any) };
+        delete cleanedSource.cache;
+        const resolvedSource = Image.resolveAssetSource(cleanedSource);
 
         return (
             <View style={[styles.imageContainer, style]} ref={forwardedRef}>
@@ -171,10 +172,10 @@ function FastImageBase({
                 />
                 {children}
             </View>
-        )
+        );
     }
 
-    const resolvedSource = Image.resolveAssetSource(source as any)
+    const resolvedSource = Image.resolveAssetSource(source as any);
 
     return (
         <View style={[styles.imageContainer, style]} ref={forwardedRef}>
@@ -192,54 +193,54 @@ function FastImageBase({
             />
             {children}
         </View>
-    )
+    );
 }
 
-const FastImageMemo = memo(FastImageBase)
+const FastImageMemo = memo(FastImageBase);
 
 const FastImageComponent: React.ComponentType<FastImageProps> = forwardRef(
     (props: FastImageProps, ref: React.Ref<any>) => (
         <FastImageMemo forwardedRef={ref} {...props} />
-    ),
-)
+    )
+);
 
-FastImageComponent.displayName = 'FastImage'
+FastImageComponent.displayName = "FastImage";
 
-interface FastImageStaticProperties {
-    resizeMode: typeof resizeMode
-    priority: typeof priority
-    cacheControl: typeof cacheControl
+export interface FastImageStaticProperties {
+    resizeMode: typeof resizeMode;
+    priority: typeof priority;
+    cacheControl: typeof cacheControl;
     preload: (
         sources: Source[],
         onProgress?: PreloadProgressHandler,
-        onComplete?: PreloadCompletionHandler,
-    ) => void
+        onComplete?: PreloadCompletionHandler
+    ) => void;
 }
 
 const FastImage: React.ComponentType<FastImageProps> &
-    FastImageStaticProperties = FastImageComponent as any
+    FastImageStaticProperties = FastImageComponent as any;
 
-FastImage.resizeMode = resizeMode
+FastImage.resizeMode = resizeMode;
 
-FastImage.cacheControl = cacheControl
+FastImage.cacheControl = cacheControl;
 
-FastImage.priority = priority
+FastImage.priority = priority;
 
 FastImage.preload = (
     sources: Source[],
     onProgress?: PreloadProgressHandler,
-    onComplete?: PreloadCompletionHandler,
-) => preloaderManager.preload(sources, onProgress, onComplete)
+    onComplete?: PreloadCompletionHandler
+) => preloaderManager.preload(sources, onProgress, onComplete);
 
 const styles = StyleSheet.create({
     imageContainer: {
-        overflow: 'hidden',
+        overflow: "hidden",
     },
-})
+});
 
 // Types of requireNativeComponent are not correct.
 const FastImageView = (requireNativeComponent as any)(
-    'FastImageView',
+    "FastImageView",
     FastImage,
     {
         nativeOnly: {
@@ -249,7 +250,7 @@ const FastImageView = (requireNativeComponent as any)(
             onFastImageError: true,
             onFastImageLoadEnd: true,
         },
-    },
-)
+    }
+);
 
-export default FastImage
+export default FastImage;

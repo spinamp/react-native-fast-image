@@ -19,10 +19,18 @@ Performant React Native image component.
 
 <p align="center" >
   <kbd>
-    <img src="https://github.com/DylanVann/react-native-fast-image/raw/master/docs/assets/scroll.gif" title="Scroll Demo" float="left">
+    <img
+      src="https://github.com/DylanVann/react-native-fast-image/blob/main/docs/assets/scroll.gif?raw=true"
+      title="Scroll Demo"
+      float="left"
+    >
   </kbd>
   <kbd>
-    <img src="https://github.com/DylanVann/react-native-fast-image/raw/master/docs/assets/priority.gif" title="Priority Demo" float="left">
+    <img
+      src="https://github.com/DylanVann/react-native-fast-image/blob/main/docs/assets/priority.gif?raw=true"
+      title="Priority Demo"
+      float="left"
+    >
   </kbd>
   <br>
   <em>FastImage example app.</em>
@@ -35,10 +43,10 @@ headers for images you'll generally get the sort of built in
 caching behavior you'd have in a browser.
 Even so many people have noticed:
 
--   Flickering.
--   Cache misses.
--   Low performance loading from cache.
--   Low performance in general.
+- Flickering.
+- Cache misses.
+- Low performance loading from cache.
+- Low performance in general.
 
 `FastImage` is an `Image` replacement that solves these issues.
 `FastImage` is a wrapper around
@@ -48,12 +56,12 @@ and
 
 ## Features
 
--   [x] Aggressively cache images.
--   [x] Add authorization headers.
--   [x] Prioritize images.
--   [x] Preload images.
--   [x] GIF support.
--   [x] Border radius.
+- [x] Aggressively cache images.
+- [x] Add authorization headers.
+- [x] Prioritize images.
+- [x] Preload images.
+- [x] GIF support.
+- [x] Border radius.
 
 ## Usage
 
@@ -65,24 +73,24 @@ cd ios && pod install
 ```
 
 ```jsx
-import FastImage from 'react-native-fast-image'
+import FastImage from "react-native-fast-image";
 
 const YourImage = () => (
-    <FastImage
-        style={{ width: 200, height: 200 }}
-        source={{
-            uri: 'https://unsplash.it/400/400?image=1',
-            headers: { Authorization: 'someAuthToken' },
-            priority: FastImage.priority.normal,
-        }}
-        resizeMode={FastImage.resizeMode.contain}
-    />
-)
+  <FastImage
+    style={{ width: 200, height: 200 }}
+    source={{
+      uri: "https://unsplash.it/400/400?image=1",
+      headers: { Authorization: "someAuthToken" },
+      priority: FastImage.priority.normal,
+    }}
+    resizeMode={FastImage.resizeMode.contain}
+  />
+);
 ```
 
 ## Are you using Glide already using an AppGlideModule?
 
--   [Are you using Glide already using an AppGlideModule?](docs/app-glide-module.md) (you might have problems if you don't read this)
+- [Are you using Glide already using an AppGlideModule?](docs/app-glide-module.md) (you might have problems if you don't read this)
 
 ## Are you using Proguard?
 
@@ -121,26 +129,26 @@ Headers to load the image with. e.g. `{ Authorization: 'someAuthToken' }`.
 
 ### `source.priority?: enum`
 
--   `FastImage.priority.low` - Low Priority.
--   `FastImage.priority.normal` **(Default)** - Normal Priority.
--   `FastImage.priority.high` - High Priority.
+- `FastImage.priority.low` - Low Priority.
+- `FastImage.priority.normal` **(Default)** - Normal Priority.
+- `FastImage.priority.high` - High Priority.
 
 ---
 
 ### `source.cache?: enum`
 
--   `FastImage.cacheControl.immutable` - **(Default)** - Only updates if url changes.
--   `FastImage.cacheControl.web` - Use headers and follow normal caching procedures.
--   `FastImage.cacheControl.cacheOnly` - Only show images from cache, do not make any network requests.
+- `FastImage.cacheControl.immutable` - **(Default)** - Only updates if url changes.
+- `FastImage.cacheControl.web` - Use headers and follow normal caching procedures.
+- `FastImage.cacheControl.cacheOnly` - Only show images from cache, do not make any network requests.
 
 ---
 
 ### `resizeMode?: enum`
 
--   `FastImage.resizeMode.contain` - Scale the image uniformly (maintain the image's aspect ratio) so that both dimensions (width and height) of the image will be equal to or less than the corresponding dimension of the view (minus padding).
--   `FastImage.resizeMode.cover` **(Default)** - Scale the image uniformly (maintain the image's aspect ratio) so that both dimensions (width and height) of the image will be equal to or larger than the corresponding dimension of the view (minus padding).
--   `FastImage.resizeMode.stretch` - Scale width and height independently, This may change the aspect ratio of the src.
--   `FastImage.resizeMode.center` - Do not scale the image, keep centered.
+- `FastImage.resizeMode.contain` - Scale the image uniformly (maintain the image's aspect ratio) so that both dimensions (width and height) of the image will be equal to or less than the corresponding dimension of the view (minus padding).
+- `FastImage.resizeMode.cover` **(Default)** - Scale the image uniformly (maintain the image's aspect ratio) so that both dimensions (width and height) of the image will be equal to or larger than the corresponding dimension of the view (minus padding).
+- `FastImage.resizeMode.stretch` - Scale width and height independently, This may change the aspect ratio of the src.
+- `FastImage.resizeMode.center` - Do not scale the image, keep centered.
 
 ---
 
@@ -205,17 +213,18 @@ Preload images to display later. e.g.
 FastImage.preload(
   [
     {
-      uri: 'https://facebook.github.io/react/img/logo_og.png',
-      headers: { Authorization: 'someAuthToken' },
+      uri: "https://facebook.github.io/react/img/logo_og.png",
+      headers: { Authorization: "someAuthToken" },
     },
     {
-      uri: 'https://facebook.github.io/react/img/logo_og.png',
-      headers: { Authorization: 'someAuthToken' },
+      uri: "https://facebook.github.io/react/img/logo_og.png",
+      headers: { Authorization: "someAuthToken" },
     },
   ],
   (finished, total) => console.log(`Preloaded ${finished}/${total} images`),
-  (finished, skipped) => console.log(`Completed. Failed to load ${skipped}/${finished} images`),
-)
+  (finished, skipped) =>
+    console.log(`Completed. Failed to load ${skipped}/${finished} images`)
+);
 ```
 
 ## Troubleshooting
@@ -245,9 +254,9 @@ Thanks to [@mobinni](https://github.com/mobinni) for helping with the conceptual
 
 ## Licenses
 
--   FastImage - MIT © [DylanVann](https://github.com/DylanVann)
--   SDWebImage - `MIT`
--   Glide - BSD, part MIT and Apache 2.0. See the [LICENSE](https://github.com/bumptech/glide/blob/master/license) file for details.
+- FastImage - MIT © [DylanVann](https://github.com/DylanVann)
+- SDWebImage - `MIT`
+- Glide - BSD, part MIT and Apache 2.0. See the [LICENSE](https://github.com/bumptech/glide/blob/master/license) file for details.
 
 [build-badge]: https://github.com/dylanvann/react-native-fast-image/workflows/CI/badge.svg
 [build]: https://github.com/DylanVann/react-native-fast-image/actions?query=workflow%3ACI
